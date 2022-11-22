@@ -5,6 +5,7 @@ ISO				= ./iso
 
 ENTRY			= $(SRC)/entry
 UTILS			= $(SRC)/utils
+HEAP			= $(SRC)/heap
 BOOT			= $(SRC)/boot_sector
 LINKER			= $(CONFIG)/linker.ld
 KERNEL_BIN		= $(BIN)/kernel.bin
@@ -41,6 +42,9 @@ C_SRC			= $(ENTRY)/kernel_entry.c \
 				$(UTILS)/VGA/print.c \
 				$(UTILS)/string/revstr.c \
 				$(UTILS)/string/itoa.c \
+				$(UTILS)/misc/panic.c \
+				$(UTILS)/memory/memset.c \
+				$(HEAP)/init.c
 
 # Objects
 C_OBJ			= $(C_SRC:.c=.o)
