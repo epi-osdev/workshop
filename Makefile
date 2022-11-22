@@ -46,6 +46,7 @@ C_SRC			= $(ENTRY)/kernel_entry.c \
 				$(UTILS)/memory/memset.c \
 				$(HEAP)/init.c \
 				$(HEAP)/alloc.c \
+				$(HEAP)/free.c \
 
 # Objects
 C_OBJ			= $(C_SRC:.c=.o)
