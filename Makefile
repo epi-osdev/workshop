@@ -4,6 +4,8 @@ BIN				= ./bin
 ISO				= ./iso
 
 ENTRY			= $(SRC)/entry
+INTERRUPTS		= $(SRC)/interrupts
+UTILS			= $(SRC)/utils
 BOOT			= $(SRC)/boot_sector
 LINKER			= $(CONFIG)/linker.ld
 KERNEL_BIN		= $(BIN)/kernel.bin
@@ -34,21 +36,26 @@ CFLAGS			= -g -ffreestanding -falign-jumps -falign-functions \
 LDFLAGS			= -g -relocatable
 
 # Sources
-ASM_SRC			= $(ENTRY)/entry_point.asm
-C_SRC			= $(ENTRY)/kernel_entry.c
+ASM_SRC			= $(ENTRY)/entry_point.asm \
+				  $(INTERRUPTS)/interrupts.asm
+
+C_SRC			= $(ENTRY)/kernel_entry.c \
+				  $(INTERRUPTS)/idt.c \
+				  $(INTERRUPTS)/isr.c \
+				  $(INTERRUPTS)/keyboard/keyboard.c \
+				  $(UTILS)/ports.c
 
 # Objects
 C_OBJ			= $(C_SRC:.c=.o)
 ASM_OBJ			= $(ASM_SRC:.asm=.o)
 KERNEL_OBJS		= $(ASM_OBJ) $(C_OBJ)
 
-
 # Targets
 all: build
 
 build: boot_bin kernel_bin
-	dd if=$(BOOT_BIN) 					>> $(OS_BIN)
-	dd if=$(KERNEL_BIN) 				>> $(OS_BIN)
+	cat $(BOOT_BIN)						>> $(OS_BIN)
+	cat $(KERNEL_BIN) 					>> $(OS_BIN)
 	dd if=/dev/zero bs=1048576 count=16 >> $(OS_BIN)
 
 # Compile and launch QEMU
@@ -83,4 +90,4 @@ re: fclean all
 %.o: %.asm
 	$(NASM) $(ASM_FLAGS) $< -o $@
 
-.PHONY: build run build_and_run boot_bin kernel_bin clean fclean
+.PHONY: build run build_and_run boot_bin kernel_bin clean fclean re

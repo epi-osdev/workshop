@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "*.txt": "c",
+        "keyboard.h": "c"
+    }
+}
