@@ -23,7 +23,7 @@ BOOT_BIN		= $(BIN)/boot.bin
 BOOT_FLAGS		= -f bin
 
 # Includes
-INCLUDES		= -I $(SRC)
+INCLUDES		= -I $(SRC) -I $(UTILS)
 
 # Flags
 ASM_FLAGS		= -f elf -g
@@ -38,12 +38,15 @@ LDFLAGS			= -g -relocatable
 # Sources
 ASM_SRC			= $(ENTRY)/entry_point.asm \
 				  $(INTERRUPTS)/interrupts.asm
-
 C_SRC			= $(ENTRY)/kernel_entry.c \
 				  $(INTERRUPTS)/idt.c \
 				  $(INTERRUPTS)/isr.c \
 				  $(INTERRUPTS)/keyboard/keyboard.c \
 				  $(UTILS)/ports.c
+				$(UTILS)/VGA/clear.c \
+				$(UTILS)/VGA/print.c \
+				$(UTILS)/string/revstr.c \
+				$(UTILS)/string/itoa.c \
 
 # Objects
 C_OBJ			= $(C_SRC:.c=.o)
