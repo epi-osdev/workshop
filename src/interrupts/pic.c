@@ -1,0 +1,15 @@
+#include "utils/port.h"
+
+void pic_remap()
+{
+    port_byte_out(0x20, 0x11);
+    port_byte_out(0xa0, 0x11);
+    port_byte_out(0x21, 0x20);
+    port_byte_out(0xa1, 0x28);
+    port_byte_out(0x21, 0x04);
+    port_byte_out(0xa1, 0x02);
+    port_byte_out(0x21, 0x01);
+    port_byte_out(0xa1, 0x01);
+    port_byte_out(0x21, port_byte_in(0x20));
+    port_byte_out(0xa1, port_byte_in(0xa0)); 
+}

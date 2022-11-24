@@ -29,5 +29,5 @@ gdt_data:                                   ; DS, SS, ES, FS, GS
 gdt_end:
 
 gdt_descriptor:
-    dw gdt_end - gdt_start-1
+    dw gdt_end - gdt_start - 1
     dd gdt_start

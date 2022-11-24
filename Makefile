@@ -3,12 +3,19 @@ CONFIG			= ./config
 BIN				= ./bin
 ISO				= ./iso
 
+# Main folders path
 ENTRY			= $(SRC)/entry
 UTILS			= $(SRC)/utils
 BOOT			= $(SRC)/boot_sector
+INTERRUPTS			= $(SRC)/interrupts
+
+# Linker (ld) config file
 LINKER			= $(CONFIG)/linker.ld
+
+# Kernel needed file(s)
 KERNEL_BIN		= $(BIN)/kernel.bin
 KERNEL_BUILD	= $(BIN)/kernelfull.o
+
 OS_BIN			= $(ISO)/epi-os.iso
 
 # Compilation tools (compiler, linker, etc..)
@@ -35,12 +42,18 @@ CFLAGS			= -g -ffreestanding -falign-jumps -falign-functions \
 LDFLAGS			= -g -relocatable
 
 # Sources
-ASM_SRC			= $(ENTRY)/entry_point.asm
+ASM_SRC			= $(ENTRY)/entry_point.asm \
+				  $(INTERRUPTS)/interrupts.asm 
+
 C_SRC			= $(ENTRY)/kernel_entry.c \
-				$(UTILS)/VGA/clear.c \
-				$(UTILS)/VGA/print.c \
-				$(UTILS)/string/revstr.c \
-				$(UTILS)/string/itoa.c \
+				  $(UTILS)/VGA/clear.c \
+				  $(UTILS)/VGA/print.c \
+				  $(UTILS)/string/revstr.c \
+				  $(UTILS)/string/itoa.c \
+				  $(UTILS)/port.c \
+				  $(INTERRUPTS)/idt.c \
+				  $(INTERRUPTS)/isr.c \
+				  $(INTERRUPTS)/pic.c
 
 # Objects
 C_OBJ			= $(C_SRC:.c=.o)
@@ -58,7 +71,7 @@ build: boot_bin kernel_bin
 
 # Compile and launch QEMU
 run:
-	qemu-system-x86_64 $(OS_BIN)
+	qemu-system-x86_64 -d int -no-reboot $(OS_BIN)
 
 build_and_run: build run
 

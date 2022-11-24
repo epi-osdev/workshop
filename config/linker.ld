@@ -1,9 +1,11 @@
 ENTRY(_start)
 OUTPUT_FORMAT(binary)
+phys = 0x7C00;                  /* BIOS puts us at 0x7C00 */
+
 SECTIONS
 {
-    . = 1M;
-    .text : ALIGN(4096)
+    . = phys;
+    .text 0x1000: ALIGN(4096)
     {
         *(.text)
     }

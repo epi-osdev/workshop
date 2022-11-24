@@ -12,6 +12,7 @@ switch_to_pm:
 [bits 32]
 init_pm:
     mov ax, DATA_SEG
+    
     mov ds, ax
     mov ss, ax
     mov es, ax

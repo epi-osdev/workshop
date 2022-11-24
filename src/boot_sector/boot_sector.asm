@@ -6,7 +6,7 @@ start:
     mov ds, ax
     mov es, ax
     mov ss, ax
-    mov bp, 0x7c00
+    mov bp, 0x9000
     mov sp, bp
 
 [bits 16]
@@ -21,7 +21,11 @@ run_16:
 
 [bits 16]
 load_kernel:
+    xor bx, bx
+    mov es, bx
+
     mov bx, KERNEL_OFFSET
+    
     mov dh, 31
     mov dl, [BOOT_DRIVE]
     call disk_load

@@ -1,0 +1,4 @@
+display_library: x
+
+ata0-master: type=disk, path="iso/epi-os.iso"
+boot: disk
