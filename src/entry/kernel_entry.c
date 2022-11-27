@@ -14,10 +14,10 @@ void kernel_main()
     init();
     vga_putchar_at('X', 0x0f, 0, 0);
     // __asm("sti");
-    __asm("int $0x3");
-    __asm("int $0x3");
-    __asm("int $0x4");
+    __asm__ __volatile__("int $2");
     vga_putchar_at('X', 0x0f, 3, 0);
+    char str[] = "Hello World!";
+    vga_putstr_at(str, 0x0f, 0, 1);
 
     // Clean the screen
     // vga_clear_screen();

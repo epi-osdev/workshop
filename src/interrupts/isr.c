@@ -278,16 +278,17 @@ void isr_init()
 void isr_handler(registers_t *regs)
 {
     uint32_t interrupt = regs->interrupt;
+    static size_t y = 0;
 
-    if (isr_handlers[interrupt] != 0) {
-        isr_handlers[interrupt](regs);
-    } else if (interrupt >= 32) {
-        // not handled
-    } else {
-        // exception isr
-    }
+    // if (isr_handlers[interrupt] != 0) {
+    //     isr_handlers[interrupt](regs);
+    // } else if (interrupt >= 32) {
+    //     // not handled
+    // } else {
+    //     // exception isr
+    // }
 
-    vga_putchar_at('B', 0xce, 10, 10);
+    vga_print_int_at(interrupt, 0xce, 0, y++);
 }
 
 void isr_register_handler(int interrupt, isr_callback callback)

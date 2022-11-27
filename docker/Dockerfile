@@ -9,8 +9,7 @@ RUN apt-get install -y make \
     nasm \
     lbzip2 \
     grub-common \
-    qemu \
-    bochs
+    qemu
 
 # Re-used environment variables
 ENV DIR="/osdev"

@@ -15,7 +15,6 @@ LINKER			= $(CONFIG)/linker.ld
 # Kernel needed file(s)
 KERNEL_BIN		= $(BIN)/kernel.bin
 KERNEL_BUILD	= $(BIN)/kernelfull.o
-
 OS_BIN			= $(ISO)/epi-os.iso
 
 # Compilation tools (compiler, linker, etc..)
@@ -32,14 +31,9 @@ BOOT_FLAGS		= -f bin
 INCLUDES		= -I $(SRC) -I $(UTILS)
 
 # Flags
-ASM_FLAGS		= -f elf -g
-CFLAGS			= -g -ffreestanding -falign-jumps -falign-functions \
-				  -falign-labels -falign-loops -fstrength-reduce \
-				  -fomit-frame-pointer -finline-functions -Wno-unused-function \
-				  -fno-builtin -Werror -Wno-unused-label -Wno-cpp \
-				  -Wno-unused-parameter -nostdlib -nostartfiles \
-				  -nodefaultlibs -Wall -O0 $(INCLUDES)
-LDFLAGS			= -g -relocatable
+ASM_FLAGS		= -f elf
+CFLAGS			= -g -ffreestanding $(INCLUDES)
+LDFLAGS			= -Ttext 0x1000 --oformat binary
 
 # Sources
 ASM_SRC			= $(ENTRY)/entry_point.asm \
@@ -71,7 +65,7 @@ build: boot_bin kernel_bin
 
 # Compile and launch QEMU
 run:
-	qemu-system-x86_64 -d int -no-reboot $(OS_BIN)
+	qemu-system-x86_64 $(OS_BIN)
 
 build_and_run: build run
 
@@ -79,8 +73,7 @@ boot_bin:
 	$(NASM) $(BOOT_FLAGS) $(BOOT_SRC) -o $(BOOT_BIN)
 
 kernel_bin: $(KERNEL_OBJS)
-	$(LD) $(LDFLAGS) $(KERNEL_OBJS) -o $(KERNEL_BUILD)
-	$(CC) $(CFLAGS) -T $(LINKER) -o $(KERNEL_BIN) -ffreestanding -O0 -nostdlib $(KERNEL_BUILD)
+	$(LD) $(LDFLAGS) $(KERNEL_OBJS) -o $(KERNEL_BIN)
 
 clean:
 	$(RM) $(C_OBJ)
@@ -96,7 +89,7 @@ re: fclean all
 
 # Compilations rules
 %.o: %.c
-	$(CC) $(CFLAGS) -std=gnu99 -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
 
 %.o: %.asm
 	$(NASM) $(ASM_FLAGS) $< -o $@

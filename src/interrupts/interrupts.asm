@@ -34,8 +34,8 @@ isr_common_stub:
   global isr%1
 
   isr%1:
-    push byte 0 ; dummy error byte
-    push byte %1 ; interrupt number
+    push 0 ; dummy error
+    push %1 ; interrupt number
     call isr_common_stub
 %endmacro
 
@@ -43,7 +43,7 @@ isr_common_stub:
   global isr%1
 
   isr%1:
-    push byte %1 ; interrupt number
+    push %1 ; interrupt number
     call isr_common_stub
 %endmacro
 
