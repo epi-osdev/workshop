@@ -65,7 +65,7 @@ build: boot_bin kernel_bin
 
 # Compile and launch QEMU
 run:
-	qemu-system-x86_64 $(OS_BIN)
+	qemu-system-x86_64 -d int -no-reboot $(OS_BIN)
 
 build_and_run: build run
 
@@ -94,4 +94,4 @@ re: fclean all
 %.o: %.asm
 	$(NASM) $(ASM_FLAGS) $< -o $@
 
-.PHONY: build run build_and_run boot_bin kernel_bin clean fclean
+.PHONY: build run build_and_run boot_bin kernel_bin clean fclean re

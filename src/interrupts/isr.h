@@ -1,6 +1,8 @@
 #ifndef __ISR_H__
     #define __ISR_H_
 
+    #define KERNEL_CODE_SEG 0x08
+
     // Importing routines from src/interrupts/interrupts.asm
     extern void isr0();
     extern void isr1();

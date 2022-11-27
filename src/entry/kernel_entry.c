@@ -4,8 +4,8 @@
 
 void init()
 {
-    idt_init();
     isr_init();
+    idt_init();
 }
 
 void kernel_main()
@@ -13,8 +13,10 @@ void kernel_main()
     // Initialize needed resources like the IDT, etc..
     init();
     vga_putchar_at('X', 0x0f, 0, 0);
-    // __asm("sti");
     __asm__ __volatile__("int $2");
+    __asm__ __volatile__("int $3");
+    __asm__ __volatile__("int $4");
+    __asm__ __volatile__("int $5");
     vga_putchar_at('X', 0x0f, 3, 0);
     char str[] = "Hello World!";
     vga_putstr_at(str, 0x0f, 0, 1);

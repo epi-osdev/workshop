@@ -34,17 +34,19 @@ isr_common_stub:
   global isr%1
 
   isr%1:
+    cli
     push 0 ; dummy error
     push %1 ; interrupt number
-    call isr_common_stub
+    jmp isr_common_stub
 %endmacro
 
 %macro ISR_ERROR 1
   global isr%1
 
   isr%1:
+    cli
     push %1 ; interrupt number
-    call isr_common_stub
+    jmp isr_common_stub
 %endmacro
 
 ; 0: Divide By Zero Exception
