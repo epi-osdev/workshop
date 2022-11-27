@@ -18,8 +18,8 @@ isr_common_stub:
 	push esp ; push esp --> C function parameter
 	call isr_handler
 	add esp, 4
-	
-	pop eax 
+
+	pop eax
 	mov ds, ax
 	mov es, ax
 	mov fs, ax
@@ -27,7 +27,7 @@ isr_common_stub:
 
 	popa
 	add esp, 8              ; Cleans up the pushed error code and pushed ISR number
-	
+	sti
 	iret
 
 %macro ISR 1
