@@ -3,40 +3,40 @@
 
 
 isr_common_stub:
-	pusha
+    pusha
 
-	xor eax, eax
-	mov ax, ds
-	push eax                ; save the data segment descriptor
-	
-	mov ax, 0x10            ; kernel data segment descriptor
-	mov ds, ax
-	mov es, ax
-	mov fs, ax
-	mov gs, ax
-	
-	push esp ; push esp --> C function parameter
-	call isr_handler
-	add esp, 4
+    xor eax, eax
+    mov ax, ds
+    push eax
 
-	pop eax
-	mov ds, ax
-	mov es, ax
-	mov fs, ax
-	mov gs, ax
+    mov ax, 0x10
+    mov ds, ax
+    mov es, ax
+    mov fs, ax
+    mov gs, ax
+    
+    push esp
+    call isr_handler
+    add esp, 4
 
-	popa
-	add esp, 8              ; Cleans up the pushed error code and pushed ISR number
-	sti
-	iret
+    pop eax
+    mov ds, ax
+    mov es, ax
+    mov fs, ax
+    mov gs, ax
+
+    popa
+    add esp, 8
+    sti
+    iret
 
 %macro ISR 1
   global isr%1
 
   isr%1:
     cli
-    push 0 ; dummy error
-    push %1 ; interrupt number
+    push 0
+    push %1
     jmp isr_common_stub
 %endmacro
 
@@ -45,7 +45,7 @@ isr_common_stub:
 
   isr%1:
     cli
-    push %1 ; interrupt number
+    push %1
     jmp isr_common_stub
 %endmacro
 
