@@ -9,9 +9,6 @@ UTILS			= $(SRC)/utils
 BOOT			= $(SRC)/boot_sector
 INTERRUPTS			= $(SRC)/interrupts
 
-# Linker (ld) config file
-LINKER			= $(CONFIG)/linker.ld
-
 # Kernel needed file(s)
 KERNEL_BIN		= $(BIN)/kernel.bin
 KERNEL_BUILD	= $(BIN)/kernelfull.o
