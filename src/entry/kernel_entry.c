@@ -10,7 +10,7 @@ void init()
     isr_init();
     idt_init();
 
-
+    __asm__ __volatile__("sti");
     // Adding IRQ entries
     init_timer(50);
     init_keyboard();
