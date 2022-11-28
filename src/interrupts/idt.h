@@ -6,22 +6,18 @@
     #include "utils/types.h"
 
 // IDT entries are called gates
-struct idt_entry_s {
+typedef struct idt_entry_s {
     uint16_t base_low;
     uint16_t segment;
     uint8_t always_null;
     uint8_t flags;
     uint16_t base_high;
-} __attribute__((packed)) ;
+} __attribute__((packed)) idt_entry_t;
 
-typedef struct idt_entry_s idt_entry_t;
-
-struct idt_descriptor_s {
+typedef struct idt_descriptor_s {
     uint16_t size;
     idt_entry_t *idt_start;
-} __attribute__((packed));
-
-typedef struct idt_descriptor_s idt_descriptor_t;
+} __attribute__((packed)) idt_descriptor_t;
 
 enum IDT_FLAGS {
     // Gate

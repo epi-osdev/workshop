@@ -1,7 +1,7 @@
 #include "idt.h"
 
-idt_entry_t idt_entries[ENTRIES_NUM];
-idt_descriptor_t idt_descriptor = {
+static idt_entry_t idt_entries[ENTRIES_NUM];
+static idt_descriptor_t idt_descriptor = {
     sizeof(idt_entries) - 1,
     idt_entries
 };

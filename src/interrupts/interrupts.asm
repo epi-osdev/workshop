@@ -64,8 +64,8 @@ irq_common_stub:
 
   isr%1:
     cli
-    push 0 ; dummy error
-    push %1 ; interrupt number
+    push 0
+    push %1
     jmp isr_common_stub
 %endmacro
 
@@ -74,7 +74,7 @@ irq_common_stub:
 
   isr%1:
     cli
-    push %1 ; interrupt number
+    push %1
     jmp isr_common_stub
 %endmacro
 
