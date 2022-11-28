@@ -8,8 +8,8 @@
 static KEYBOARD_LAYOUT current_layout = FR;
 
 static char layouts[LAYOUTS_NUM][KEYS_NUM] = {
-    #include "layouts/us.txt"
     #include "layouts/fr.txt"
+    #include "layouts/us.txt"
 };
 
 static uint8_t resolve_scancode(uint8_t scancode)
@@ -26,7 +26,7 @@ static void callback(registers_t *regs)
     uint8_t scancode = port_byte_in(0x60);
     uint8_t pressed_char = resolve_scancode(scancode);
 
-    vga_putchar_at('E', 0x0f, 20, 20);
+    // TODO
 }
 
 void init_keyboard()

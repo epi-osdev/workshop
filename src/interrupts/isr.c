@@ -286,8 +286,6 @@ void isr_handler(registers_t *regs)
     } else {
         // exception isr
     }
-
-    vga_print_int_at(interrupt, 0xce, 0, y++);
 }
 
 void isr_register_handler(int interrupt, isr_callback callback)
