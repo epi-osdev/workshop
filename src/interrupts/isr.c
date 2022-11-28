@@ -3,7 +3,7 @@
 #include "isr.h"
 #include "pic.h"
 
-isr_callback isr_handlers[ENTRIES_NUM];
+static isr_callback isr_handlers[ENTRIES_NUM];
 
 static void isr_init_idt_gates()
 {
