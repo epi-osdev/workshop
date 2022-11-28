@@ -44,7 +44,9 @@ C_SRC			= $(ENTRY)/kernel_entry.c \
 				  $(UTILS)/port.c \
 				  $(INTERRUPTS)/idt.c \
 				  $(INTERRUPTS)/isr.c \
-				  $(INTERRUPTS)/pic.c
+				  $(INTERRUPTS)/pic.c \
+				  $(INTERRUPTS)/timer/timer.c \
+				  $(INTERRUPTS)/keyboard/keyboard.c
 
 # Objects
 C_OBJ			= $(C_SRC:.c=.o)

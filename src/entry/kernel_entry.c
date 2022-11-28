@@ -1,11 +1,19 @@
 #include "VGA.h"
 #include "interrupts/idt.h"
 #include "interrupts/isr.h"
+#include "interrupts/keyboard/keyboard.h"
+#include "interrupts/timer/timer.h"
 
 void init()
 {
+    // Default table entries
     isr_init();
     idt_init();
+
+
+    // Adding IRQ entries
+    init_timer(50);
+    init_keyboard();
 }
 
 void kernel_main()

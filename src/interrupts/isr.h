@@ -1,7 +1,10 @@
 #ifndef __ISR_H__
-    #define __ISR_H_
+    #define __ISR_H__
 
     #define KERNEL_CODE_SEG 0x08
+
+    #include "utils/port.h"
+    #include "utils/types.h"
 
     // Importing routines from src/interrupts/interrupts.asm
     extern void isr0();
@@ -276,5 +279,7 @@
     void isr_handler(registers_t *regs);
     void isr_init();
     void isr_register_handler(int interrupt, isr_callback callback);
+    void irq_handler(registers_t *regs);
+
 
 #endif

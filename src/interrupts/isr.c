@@ -269,9 +269,9 @@ void isr_init()
 {
     isr_init_idt_gates();
     idt_enable_gates();
-    // pic_remap();
+    pic_remap();
 
-    unset_gate_flag(0x80, IDT_FLAG_PRESENT);
+    // unset_gate_flag(0x80, IDT_FLAG_PRESENT);
 }
 
 void isr_handler(registers_t *regs)
@@ -282,7 +282,7 @@ void isr_handler(registers_t *regs)
     if (isr_handlers[interrupt] != 0) {
         isr_handlers[interrupt](regs);
     } else if (interrupt >= 32) {
-        // not handled
+        
     } else {
         // exception isr
     }
@@ -294,4 +294,17 @@ void isr_register_handler(int interrupt, isr_callback callback)
 {
     isr_handlers[interrupt] = callback;
     set_gate_flag(interrupt, IDT_FLAG_PRESENT);
+}
+
+void irq_handler(registers_t *regs)
+{
+    if (regs->interrupt >= 40) { // After every interrupt we need to send an EOI to the PICs or they will not send another interrupt again
+        port_byte_out(0xa0, 0x20); // Slave
+    }
+
+    port_byte_out(0x20, 0x20); // Master
+
+    if (isr_handlers[regs->interrupt] != 0) {  // Handle the interrupt in a more modular way
+        isr_handlers[regs->interrupt](regs);
+    }
 }

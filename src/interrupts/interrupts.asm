@@ -1,34 +1,63 @@
 [bits 32]
 [extern isr_handler]
+[extern irq_handler]
 
 
 isr_common_stub:
-	pusha
+    pusha
 
-	xor eax, eax
-	mov ax, ds
-	push eax                ; save the data segment descriptor
-	
-	mov ax, 0x10            ; kernel data segment descriptor
-	mov ds, ax
-	mov es, ax
-	mov fs, ax
-	mov gs, ax
-	
-	push esp ; push esp --> C function parameter
-	call isr_handler
-	add esp, 4
+    xor eax, eax
+    mov ax, ds
+    push eax                ; save the data segment descriptor
+    
+    mov ax, 0x10            ; kernel data segment descriptor
+    mov ds, ax
+    mov es, ax
+    mov fs, ax
+    mov gs, ax
+    
+    push esp ; push esp --> C function parameter
+    call isr_handler
+    add esp, 4
 
-	pop eax
-	mov ds, ax
-	mov es, ax
-	mov fs, ax
-	mov gs, ax
+    pop eax
+    mov ds, ax
+    mov es, ax
+    mov fs, ax
+    mov gs, ax
 
-	popa
-	add esp, 8              ; Cleans up the pushed error code and pushed ISR number
-	sti
-	iret
+    popa
+    add esp, 8              ; Cleans up the pushed error code and pushed ISR number
+    sti
+    iret
+
+irq_common_stub:
+    pusha
+
+    xor eax, eax
+    mov ax, ds
+    push eax
+
+    mov ax, 0x10
+    mov ds, ax
+    mov es, ax
+    mov fs, ax
+    mov gs, ax
+
+    push esp
+    call irq_handler
+    add esp, 4
+
+    pop ebx
+    mov ds, bx
+    mov es, bx
+    mov fs, bx
+    mov gs, bx
+
+    popa
+    add esp, 8
+    sti
+    iret
 
 %macro ISR 1
   global isr%1
@@ -47,6 +76,16 @@ isr_common_stub:
     cli
     push %1 ; interrupt number
     jmp isr_common_stub
+%endmacro
+
+%macro IRQ 2
+  global irq%1
+
+  irq%1:
+    cli
+    push %1; dummy error
+    push %2 ; interrupt number
+    jmp irq_common_stub
 %endmacro
 
 ; 0: Divide By Zero Exception
@@ -326,3 +365,22 @@ ISR 252
 ISR 253
 ISR 254
 ISR 255
+
+; IRQ handlers
+
+IRQ 0, 32
+IRQ 1, 33
+IRQ 2, 34
+IRQ 3, 35
+IRQ 4, 36
+IRQ 5, 37
+IRQ 6, 38
+IRQ 7, 39
+IRQ 8, 40
+IRQ 9, 41
+IRQ 10, 42
+IRQ 11, 43
+IRQ 12, 44
+IRQ 13, 45
+IRQ 14, 46
+IRQ 15, 47
