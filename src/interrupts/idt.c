@@ -13,7 +13,7 @@ void idt_init()
 
 void lidt()
 {
-    __asm__ __volatile__("lidt (%0)" : : "m" (idt_descriptor));
+    __asm__("lidt (%0)" : : "m" (idt_descriptor));
 }
 
 void set_idt_gate(

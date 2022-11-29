@@ -49,7 +49,7 @@ The lidt functions is just calling the `lidt` assembly function. In C you can't 
 ```c
 void lidt(void)
 {
-    __asm__ __volatile__("lidt %0" : : "m" (idt_descriptor));
+    __asm__("lidt %0" : : "m" (idt_descriptor));
 }
 ```
 Do not try to understand how it's working because it's not important. The important thing is that it's loading the IDT into the CPU.

@@ -11,7 +11,7 @@ void init()
     idt_init();
 
     // Set interrupt flag
-    __asm__ __volatile__("sti");
+    __asm__("sti");
 
     // Adding IRQ entries
     init_timer(50);
