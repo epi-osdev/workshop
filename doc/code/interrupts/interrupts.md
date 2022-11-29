@@ -36,7 +36,7 @@ typedef struct idt_entry_s {
     uint16_t base_high;
 } __attribute__((packed)) idt_entry_t;
 ```
-If you don't know what `__attribute__((packed))` does, it's just to tell the compiler to not add padding between the fields of the structure. It's really usefull here because we want to have a structure of 8 bytes and not more. More information about this can be found [here](https://gcc.gnu.org/onlinedocs/gcc-4.8.1/gcc/Type-Attributes.html).
+If you don't know what `__attribute__((packed))` does, it's just to tell the compiler to not add padding between the fields of the structure. It's really useful here because we want to have a structure of 8 bytes and not more. More information about this can be found [here](https://gcc.gnu.org/onlinedocs/gcc-4.8.1/gcc/Type-Attributes.html).
 
 the `idt_entry_t` is just a structure of one entry, but we need a table of entries. It also must be used by many functions (for example to set an entry, a flag, remove an entry, etc...). So we need to make it global. In the file [idt.c](../../../src/interrupts/idt.c) we can see this:
 ```c

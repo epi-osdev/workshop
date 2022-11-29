@@ -1,6 +1,6 @@
 # INTRODUCTION
 
-String utils is a library that contains all the functions to manipulate strings. It's just basic functions as you may know, but it's a good start to manipulate strings and it will be usefull in the future.
+String utils is a library that contains all the functions to manipulate strings. It's just basic functions as you may know, but it's a good start to manipulate strings and it will be useful in the future.
 
 # TABLE OF CONTENTS
 
@@ -11,11 +11,11 @@ String utils is a library that contains all the functions to manipulate strings.
 
 # How it works ? <a name="how-it-works"></a>
 
-This is containing all the functions to manipulate strings. It's just basic functions as you may know, but it's a good start to manipulate strings and it will be usefull in the future. All the functions are stored in the `src/utils/string/` folder.
+This is containing all the functions to manipulate strings. It's just basic functions as you may know, but it's a good start to manipulate strings and it will be useful in the future. All the functions are stored in the `src/utils/string/` folder.
 
 # How to use it ? <a name="how-to-use-it"></a>
 
-The string utils is a library that contains all the functions to manipulate strings. It's just basic functions as you may know, but it's a good start to manipulate strings and it will be usefull in the future. It's providing an API named [string.h](../../../src/utils/string.h) that contains all the functions. Only this file must be included to use the string utils.
+The string utils is a library that contains all the functions to manipulate strings. It's just basic functions as you may know, but it's a good start to manipulate strings and it will be useful in the future. It's providing an API named [string.h](../../../src/utils/string.h) that contains all the functions. Only this file must be included to use the string utils.
 
 # Functions list <a name="functions-list"></a>
 

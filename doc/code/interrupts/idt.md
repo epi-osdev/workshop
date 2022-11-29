@@ -17,7 +17,7 @@ This file is explaining how is working the [idt.c](../../../src/interrupts/idt.c
 
 ## DATA STRUCTURES <a name="data-structures"></a>
 
-In the header we are defining some usefull datas. The first one that we can see is the:
+In the header we are defining some useful datas. The first one that we can see is the:
 ```c
 #define MAX_IDT_ENTRIES 256
 ```
@@ -42,7 +42,7 @@ typedef struct idt_descriptor_s {
 It's the `IDT` descriptor, you already know what a descriptor is with the [GDT](../boot/gdt.md) descriptor, it's the same things. The `size` field is the size of our `IDT` and the `idt_start` field is the address of the first entry of our `IDT`.
 Those two structures have already been explained in the [interrupts.md](interrupts.md) file. But it's a good thing to have a quick look at them.
 
-There is another data that usefull. It's an enum named `IDT_FLAGS`. This enum is containing all the flags that we can use in our `IDT` entries. Here is the enum:
+There is another data that useful. It's an enum named `IDT_FLAGS`. This enum is containing all the flags that we can use in our `IDT` entries. Here is the enum:
 ```c
 enum IDT_FLAGS {
     // Gate
