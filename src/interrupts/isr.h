@@ -3,7 +3,7 @@
 
     #define KERNEL_CODE_SEG 0x08
 
-    #include "utils/port.h"
+    #include "interrupts/port.h"
     #include "utils/types.h"
 
     // Importing routines from src/interrupts/interrupts.asm

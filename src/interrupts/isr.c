@@ -271,7 +271,7 @@ void isr_init()
     pic_remap();
     idt_enable_gates();
 
-    // unset_gate_flag(0x80, IDT_FLAG_PRESENT);
+    unset_gate_flag(0x80, IDT_FLAG_PRESENT);
 }
 
 void isr_handler(registers_t *regs)
@@ -281,10 +281,6 @@ void isr_handler(registers_t *regs)
 
     if (isr_handlers[interrupt] != 0) {
         isr_handlers[interrupt](regs);
-    } else if (interrupt >= 32) {
-        
-    } else {
-        // exception isr
     }
 }
 

@@ -2,7 +2,9 @@
 
 This document explains you how idt/isr is working and how it's implemented in the project.
 The ISR (Interrupt Service Routine) and the IDT (Interrupt Descriptor Table) two importants parts of the PM. The ISR is the function that is called when an interrupt is triggered. The IDT is the table that contains the address of the ISR and the privilege level of the interrupt.
-An interrupt is a signal that is sent to the CPU when an event occurs. The CPU can't handle all the interrupts at the same time, so it has to prioritize them. The priority is defined by the privilege level of the interrupt. The higher the privilege level, the higher the priority. The privilege level is defined in the IDT.
+An interrupt is a signal that is sent to the CPU when an event occurs. The CPU can't handle all the interrupts at the same time, so it has to prioritize them. The priority is defined by the privilege level of the interrupt. The higher the privilege level, the higher the priority. The privilege level is defined in the IDT. There is also an other type of interrupts that's called IRQ, the difference between IRQ and ISR is that the IRQ is handled by the PIC (Programmable Interrupt Controller) and the ISR is handled by the CPU. The PIC is a hardware that is used to handle multiple interrupts at the same time. The PIC is connected to the CPU through the IRQ lines. The PIC has 16 IRQ lines, so it can handle 16 interrupts at the same time.
+To be simple, the ISR is the function that is called when an interrupt is triggered by the CPU and the IRQ is the function that is called when an interrupt is triggered by the PIC (keyboard, mouse, etc...).
+ISR and IRQ have the same data structures
 
 # TABLE OF CONTENTS
 

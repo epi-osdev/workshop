@@ -1,8 +1,8 @@
 #include "VGA.h"
 #include "interrupts/idt.h"
 #include "interrupts/isr.h"
-#include "interrupts/keyboard/keyboard.h"
-#include "interrupts/timer/timer.h"
+#include "drivers/keyboard.h"
+#include "interrupts/timer.h"
 
 void init()
 {

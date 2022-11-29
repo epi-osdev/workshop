@@ -7,7 +7,8 @@ ISO				= ./iso
 ENTRY			= $(SRC)/entry
 UTILS			= $(SRC)/utils
 BOOT			= $(SRC)/boot_sector
-INTERRUPTS			= $(SRC)/interrupts
+INTERRUPTS		= $(SRC)/interrupts
+DRIVERS			= $(SRC)/drivers
 
 # Kernel needed file(s)
 KERNEL_BIN		= $(BIN)/kernel.bin
@@ -41,12 +42,12 @@ C_SRC			= $(ENTRY)/kernel_entry.c \
 				  $(UTILS)/VGA/print.c \
 				  $(UTILS)/string/revstr.c \
 				  $(UTILS)/string/itoa.c \
-				  $(UTILS)/port.c \
+				  $(INTERRUPTS)/port.c \
 				  $(INTERRUPTS)/idt.c \
 				  $(INTERRUPTS)/isr.c \
 				  $(INTERRUPTS)/pic.c \
-				  $(INTERRUPTS)/timer/timer.c \
-				  $(INTERRUPTS)/keyboard/keyboard.c
+				  $(INTERRUPTS)/timer.c \
+				  $(DRIVERS)/keyboard/keyboard.c
 
 # Objects
 C_OBJ			= $(C_SRC:.c=.o)

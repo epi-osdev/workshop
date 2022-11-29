@@ -9,11 +9,12 @@ This file is containing multiples functions, the first one to be called is the `
 void isr_init()
 {
     isr_init_idt_gates();
+    pic_remap();
     idt_enable_gates();
     unset_gate_flag(0x80, IDT_FLAG_PRESENT);
 }
 ```
-There is 3 functions called in this one, the first one is the `isr_init_idt_gates` which is initializing all the IDT gates, the second one is the `idt_enable_gates` which is enabling the IDT gates and the last one is the `unset_gate_flag` which is unsetting the flag of the syscall gate.
+There is 3 functions called in this one, the first one is the `isr_init_idt_gates` which is initializing all the IDT gates, the second one is `pic_remap` that's remaping all the PIC map, the third one is the `idt_enable_gates` which is enabling the IDT gates and the last one is the `unset_gate_flag` which is unsetting the flag of the syscall gate.
 
 Let's see the `isr_init_idt_gates` function:
 ```c
@@ -22,10 +23,14 @@ static void isr_init_idt_gates()
     set_idt_gate(0, isr0, KERNEL_CODE_SEG, IDT_FLAG_RING0 | IDT_FLAG_GATE_32BIT_INT);
     set_idt_gate(1, isr1, KERNEL_CODE_SEG, IDT_FLAG_RING0 | IDT_FLAG_GATE_32BIT_INT);
     // ...
+    set_idt_gate(32, irq0, KERNEL_CODE_SEG, IDT_FLAG_RING0 | IDT_FLAG_GATE_32BIT_INT);
+    set_idt_gate(33, irq1, KERNEL_CODE_SEG, IDT_FLAG_RING0 | IDT_FLAG_GATE_32BIT_INT);
+    // ...
+    set_idt_gate(47, irq15, KERNEL_CODE_SEG, IDT_FLAG_RING0 | IDT_FLAG_GATE_32BIT_INT);
     set_idt_gate(255, isr255, KERNEL_CODE_SEG, IDT_FLAG_RING0 | IDT_FLAG_GATE_32BIT_INT);
 }
 ```
-This function is static because it's only used in this file, it's initializing all the IDT entries with the functions isr0 to isr255. All thoses functions are defined in the [interrupts.asm](../../../src/interrupts/interrupts.asm) file with the `global` keyword. We can use them in the C because we are using the `extern` keyword in the [isr.h](../../../src/interrupts/isr.h) file.
+This function is static because it's only used in this file, it's initializing all the IDT entries with the functions isr0 to isr255. All thoses functions are defined in the [interrupts.asm](../../../src/interrupts/interrupts.asm) file with the `global` keyword. We can use them in the C because we are using the `extern` keyword in the [isr.h](../../../src/interrupts/isr.h) file. It's the same things for the `irq0` to `irq15` functions.
 
 The next function is the `idt_enable_gates` function, it's in the [idt.c](../../../src/interrupts/idt.c) file, you can see the doc [here](idt.md). This function is enabling all the IDT gates.
 
@@ -61,3 +66,20 @@ void isr_register_handler(int interrupt, isr_callback callback)
 }
 ```
 The function is taking 2 parameters, the first one is the interrupt number and the second one is the callback. The function is setting the callback in the `isr_handlers` array and it's setting the flag of the interrupt in the IDT.
+
+There is also an handler for the IRQs, it's the `irq_handler` function, it's shaped like this:
+```c
+void irq_handler(registers_t *regs)
+{
+    if (regs->interrupt >= 40) {
+        port_byte_out(0xa0, 0x20);
+    }
+
+    port_byte_out(0x20, 0x20);
+
+    if (isr_handlers[regs->interrupt] != 0) {
+        isr_handlers[regs->interrupt](regs);
+    }
+}
+```
+This function just handling the IRQs. It's doing doing some stuff with the PICs with the functions `port_byte_out` and `port_byte_in` which are defined in the [port.c](../../../src/interrupts/port.c) file.

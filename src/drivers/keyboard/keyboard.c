@@ -1,8 +1,8 @@
 #include "keyboard.h"
 
-#include "../idt.h"
-#include "../isr.h"
-#include "utils/port.h"
+#include "interrupts/idt.h"
+#include "interrupts/isr.h"
+#include "interrupts/port.h"
 #include "utils/VGA.h"
 
 static KEYBOARD_LAYOUT current_layout = FR;
@@ -27,6 +27,7 @@ static void callback(registers_t *regs)
     uint8_t pressed_char = resolve_scancode(scancode);
 
     // TODO
+    vga_putchar_at(pressed_char, 0x0f, 20, 20);
 }
 
 void init_keyboard()

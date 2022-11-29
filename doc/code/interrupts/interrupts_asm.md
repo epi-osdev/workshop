@@ -126,3 +126,5 @@ ISR_ERROR 12
 # ...
 ISR 255
 ```
+
+If you understand the ISR implementation, you can easily understand the IRQ implementation. The main difference is that we are using a macro with 2 arguments.
