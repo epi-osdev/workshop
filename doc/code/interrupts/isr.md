@@ -38,9 +38,9 @@ The last function that's being called is the `unset_gate_flag` function, it's in
 
 Also, there is 2 more functions in this file: `isr_handler` and `isr_register_handler` the first one is for running some code when an interrupt is triggered, the second one is for registering a callback to the first function. All thoses functions use a global variable named `isr_handlers` which is an array of function pointers.
 ```c
-isr_callback isr_handlers[ENTRIES_NUM];
+isr_callback isr_handlers[MAX_IDT_ENTRIES];
 ```
-The `isr_callback` and the `ENTRIES_NUM` types are defined in the [isr.h](../../../src/interrupts/isr.h). The ENTRIES_NUM corresponds to the number of entries in the IDT, it's 256.
+The `isr_callback` and the `MAX_IDT_ENTRIES` types are defined in the [isr.h](../../../src/interrupts/isr.h). The MAX_IDT_ENTRIES corresponds to the number of entries in the IDT, it's 256.
 
 The functions are shaped like this:
 ```c
