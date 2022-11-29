@@ -12,7 +12,7 @@ unsigned char port_byte_in(unsigned short port)
 {
     unsigned char result = 0;
 
-    __asm__("in %%dx, %%al" : "=a" (result) : "d" (port));
+    __asm__ __volatile__("in %%dx, %%al" : "=a" (result) : "d" (port));
     return (result);
 }
 
