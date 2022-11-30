@@ -60,32 +60,32 @@ irq_common_stub:
     iret
 
 %macro ISR 1
-  global isr%1
+    global isr%1
 
-  isr%1:
-    cli
-    push 0
-    push %1
-    jmp isr_common_stub
+    isr%1:
+      cli
+      push 0
+      push %1
+      jmp isr_common_stub
 %endmacro
 
 %macro ISR_ERROR 1
-  global isr%1
+    global isr%1
 
-  isr%1:
-    cli
-    push %1
-    jmp isr_common_stub
+    isr%1:
+      cli
+      push %1
+      jmp isr_common_stub
 %endmacro
 
 %macro IRQ 2
-  global irq%1
+    global irq%1
 
-  irq%1:
-    cli
-    push %1; dummy error
-    push %2 ; interrupt number
-    jmp irq_common_stub
+    irq%1:
+      cli
+      push %1; dummy error
+      push %2 ; interrupt number
+      jmp irq_common_stub
 %endmacro
 
 ; 0: Divide By Zero Exception

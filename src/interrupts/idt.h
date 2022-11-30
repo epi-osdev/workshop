@@ -1,7 +1,7 @@
 #ifndef __IDT_H__
     #define __IDT_H__
 
-    #define ENTRIES_NUM 256
+    #define MAX_IDT_ENTRIES 256
 
     #include "utils/types.h"
 
@@ -38,9 +38,9 @@ enum IDT_FLAGS {
 
 void idt_init();
 void set_idt_gate(
-    int32_t entry_index,
+    uint8_t entry_index,
     void *base, 
-    uint32_t segment,
+    uint16_t segment,
     uint8_t flags
 );
 void set_gate_flag(int entry_index, uint8_t flag);

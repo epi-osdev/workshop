@@ -3,7 +3,7 @@
 #include "isr.h"
 #include "pic.h"
 
-static isr_callback isr_handlers[ENTRIES_NUM];
+static isr_callback isr_handlers[MAX_IDT_ENTRIES];
 
 static void isr_init_idt_gates()
 {
@@ -277,7 +277,6 @@ void isr_init()
 void isr_handler(registers_t *regs)
 {
     uint32_t interrupt = regs->interrupt;
-    static size_t y = 0;
 
     if (isr_handlers[interrupt] != 0) {
         isr_handlers[interrupt](regs);
