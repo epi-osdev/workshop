@@ -14,7 +14,7 @@ static char layouts[LAYOUTS_NUM][KEYS_NUM] = {
 
 static uint8_t resolve_scancode(uint8_t scancode)
 {
-    if (scancode > 58) {
+    if (scancode > KEYS_NUM) {
         return 0;
     }
 
